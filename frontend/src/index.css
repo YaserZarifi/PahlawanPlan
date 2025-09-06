@@ -1,0 +1,268 @@
+/* Import Tailwind's base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Define CSS variables for our background images */
+:root {
+    --bg-light-image: url('assets/bg_light.jpg');
+    --bg-dark-image: url('assets/bg_dark.jpg');
+}
+
+body {
+    /* Fallback color */
+    background-color: #f3f4f6;
+}
+
+/* BACKGROUND FADE TECHNIQUE:
+  We use two pseudo-elements. The ::before element holds the light theme BG and is always present.
+  The ::after element holds the dark theme BG and sits on top, but starts as transparent.
+  When dark mode is activated (by adding the 'dark' class to the <html> tag),
+  we simply fade in the ::after element, creating a smooth cross-fade effect.
+*/
+
+/* Base styles for both pseudo-elements */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    /* This transition is key for the smooth fade! */
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* Light theme background (bottom layer) */
+body::before {
+    background-image: var(--bg-light-image);
+    filter: blur(5px);
+
+}
+
+/* Dark theme background (top layer, initially hidden) */
+body::after {
+    background-image: var(--bg-dark-image);
+    filter: blur(5px);
+    opacity: 0; /* Hidden by default */
+}
+
+/* When the html tag has the 'dark' class, fade in the dark background */
+html.dark body::after {
+    opacity: 1; /* Revealed in dark mode */
+}
+
+/* STYLES FOR ON-SCROLL CARD ANIMATION */
+
+/* The initial, hidden state of the card */
+.workout-day-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* The final, visible state of the card */
+.workout-day-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInFromRight 0.5s ease-out forwards;
+}
+
+.slide-in-left {
+    animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    /* The light grey "track" for the spinner */
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    /* The blue part that spins */
+    border-top-color: #3b82f6; /* A nice blue color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* In dark mode, we'll make the track a bit lighter */
+html.dark .spinner {
+    border-color: rgba(255, 255, 255, 0.2);
+    border-top-color: #60a5fa; /* A slightly lighter blue for dark mode */
+}
+
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: currentColor;
+    /* Adjusts cursor to align with text */
+    vertical-align: bottom;
+    animation: blink 1s step-end infinite;
+}
+
+/* For the workout plan's fade-in effect */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+
+
+.collapsible-content {
+    max-height: 1000px; /* A large height to show content */
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.collapsible-content.closed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+
+
+/* --- Custom Scrollbar Styles --- */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #a0a0a0 #f0f0f0; /* thumb track */
+}
+
+html.dark * {
+    scrollbar-color: #505050 #202020; /* thumb track */
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1; /* Light mode thumb color */
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a8a8;
+}
+
+/* Dark mode scrollbar styles */
+html.dark ::-webkit-scrollbar-thumb {
+    background-color: #555555; /* Dark mode thumb color */
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+    background-color: #777777;
+}
+
+
+
+/* --- Mini Spinner for Typing Indicator --- */
+.mini-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3b82f6; /* Blue to match the main spinner */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+html.dark .mini-spinner {
+    border-color: rgba(255, 255, 255, 0.2);
+    border-top-color: #60a5fa; /* Lighter blue for dark mode */
+}
+
+
+
+/* --- Keyframes for Modal Animation --- */
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes modal-exit {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+/* Classes to trigger the animations */
+.modal-enter-active {
+    animation: modal-enter 1s ease-out forwards;
+}
+
+.modal-exit-active {
+    animation: modal-exit 1s ease-out forwards;
+}

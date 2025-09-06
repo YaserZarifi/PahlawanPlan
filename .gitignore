@@ -1,0 +1,59 @@
+# ==========================
+# Python / Django ignores
+# ==========================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Django migrations (optional: ignore if you want them in git)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# ==========================
+# Node / React ignores
+# ==========================
+
+# Node modules
+frontend/node_modules/
+
+# Build outputs
+frontend/build/
+frontend/dist/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# ==========================
+# Miscellaneous
+# ==========================
+
+# IDE / editor settings
+.vscode/
+.idea/
+*.swp
+.DS_Store
