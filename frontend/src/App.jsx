@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import pahlawanLogo from './assets/logo.png';
 
 
-// --- Theme Toggle Component (No changes) ---
 const ThemeToggle = ({ theme, setTheme }) => {
     const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
     return (
@@ -15,7 +14,6 @@ const ThemeToggle = ({ theme, setTheme }) => {
 };
 
 
-// --- UPDATED: Exercise Modal to Display YouTube Video ---
 const ExerciseModal = ({ exerciseName, onClose }) => {
     const [details, setDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -225,7 +223,6 @@ const WorkoutPlanDisplay = ({ plan, onExerciseClick }) => {
 };
 
 
-// --- Main App Component ---
 function App() {
     const [theme, setTheme] = useState(() => { const savedTheme = localStorage.getItem('theme'); if (savedTheme) return savedTheme; if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark'; return 'light'; });
     const [formData, setFormData] = useState({
