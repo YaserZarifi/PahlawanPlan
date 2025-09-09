@@ -255,22 +255,60 @@ function App() {
     }, [theme]);
 
     const handleInputChange = (e) => { const { name, value } = e.target; setFormData((prevData) => ({ ...prevData, [name]: value, })); };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setError(null);
-        setWorkoutPlan(null);
-        setThinkingText('');
-        setIsPlanVisible(false); // Reset plan visibility
-        try {
-            const response = await fetch('https://pahlawanplan.onrender.com/api/generate-workout/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData), });
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setIsLoading(true);
+    //     setError(null);
+    //     setWorkoutPlan(null);
+    //     setThinkingText('');
+    //     setIsPlanVisible(false); // Reset plan visibility
+    //     try {
+    //         const response = await fetch('https://pahlawanplan.onrender.com/api/generate-workout/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData), });
+    //         const data = await response.json();
+    //         if (!response.ok) { throw new Error(data.error || 'Something went wrong.'); }
+    //         setWorkoutPlan(data.plan);
+    //         setThinkingText(data.thinking || '');
+    //     } catch (err) { setError(err.message || 'Failed to connect to the server.'); }
+    //     finally { setIsLoading(false); }
+    // };
+      const handleSubmit = async (e) => {
+            e.preventDefault();
+            setIsLoading(true);
+            setError(null);
+            setWorkoutPlan(null);
+            setThinkingText('');
+            setIsPlanVisible(false);
+            try {
+            const response = await fetch('https://pahlawanplan.onrender.com/api/generate-workout/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
             const data = await response.json();
             if (!response.ok) { throw new Error(data.error || 'Something went wrong.'); }
+
+            // --- THIS IS THE UPDATED LOGIC ---
             setWorkoutPlan(data.plan);
-            setThinkingText(data.thinking || '');
-        } catch (err) { setError(err.message || 'Failed to connect to the server.'); }
-        finally { setIsLoading(false); }
-    };
+
+            // Check if the thinking text actually has content
+            if (data.thinking && data.thinking.trim() !== '') {
+                setThinkingText(data.thinking);
+            } else {
+                // If there's no thinking text, skip the animation and show the plan directly
+                setThinkingText('');
+                setIsPlanVisible(true);
+            }
+
+            } catch (err) {
+            setError(err.message || 'Failed to connect to the server.');
+            }
+            finally {
+            setIsLoading(false);
+            }
+        };
+
+
     const handleExerciseClick = (exercise) => { setSelectedExercise(exercise); };
     const handleCloseModal = () => { setSelectedExercise(null); };
 
