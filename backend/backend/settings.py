@@ -130,8 +130,12 @@ USE_I18N = True
 USE_TZ = True
 
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
+ALLOWED_HOSTS = ['pahlawanplan.onrender.com', '127.0.0.1']
+
+CORS_ALLOWED_ORIGINS = [
+    'https://pahlawan-ai.netlify.app',
+    'http://localhost:5173',
+]
 
 
 
