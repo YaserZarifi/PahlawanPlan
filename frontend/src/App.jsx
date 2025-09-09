@@ -29,7 +29,7 @@ const ExerciseModal = ({ exerciseName, onClose }) => {
 
         const fetchExerciseDetails = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/exercise-details/?name=${encodeURIComponent(exerciseName)}`);
+                const response = await fetch(`https://pahlawanplan.onrender.com/api/exercise-details/?name=${encodeURIComponent(exerciseName)}`);
                 const data = await response.json(); // Always parse JSON to get error message
                 if (!response.ok) {
                     throw new Error(data.error || 'Failed to fetch exercise details.');
@@ -264,7 +264,7 @@ function App() {
         setThinkingText('');
         setIsPlanVisible(false); // Reset plan visibility
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/generate-workout/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData), });
+            const response = await fetch('https://pahlawanplan.onrender.com/api/generate-workout/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData), });
             const data = await response.json();
             if (!response.ok) { throw new Error(data.error || 'Something went wrong.'); }
             setWorkoutPlan(data.plan);
