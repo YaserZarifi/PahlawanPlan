@@ -1,5 +1,4 @@
-// frontend/src/App.jsx
-
+// Trigger re-deploy
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import pahlawanLogo from './assets/logo.png';
 
